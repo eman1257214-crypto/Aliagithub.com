@@ -31,11 +31,12 @@ color: black;
 
 <script>
 (function(){
-   // Aapki Public Key yahan set kar di gayi hai
+   // Aapki confirm Public Key jo screenshot mein hai
    emailjs.init("7nmy7Endz5mBgcErO"); 
 })();
 
 function sendPrompt(){
+   var btn = document.querySelector("button");
    var promptValue = document.getElementById("prompt").value;
    
    if(promptValue == ""){ 
@@ -43,18 +44,26 @@ function sendPrompt(){
       return; 
    }
 
-   // Aapki Service ID aur Template ID yahan set hain
-   // Note: 'message' wahi variable hai jo aapne EmailJS template mein {{message}} likha hoga
+   // Button ko disable karein taaki bar bar click na ho
+   btn.disabled = true;
+   btn.innerText = "Sending...";
+
    var templateParams = {
       message: promptValue
    };
 
+   // Service ID: service_e2ix46l
+   // Template ID: template_7rjirg
    emailjs.send("service_e2ix46l", "template_7rjirg", templateParams)
    .then(function(response) {
-      alert("Prompt sent successfully! Check your email.");
-      document.getElementById("prompt").value = ""; // Form clear karne ke liye
+      alert("Mubarak ho! Prompt mil gaya hai.");
+      document.getElementById("prompt").value = ""; 
+      btn.disabled = false;
+      btn.innerText = "Generate Video";
    }, function(error) {
-      alert("Error sending prompt: " + JSON.stringify(error));
+      alert("Masla aa gaya hai: " + JSON.stringify(error));
+      btn.disabled = false;
+      btn.innerText = "Generate Video";
    });
 }
 </script>
