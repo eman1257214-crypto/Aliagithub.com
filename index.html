@@ -23,41 +23,36 @@ width:80%;
 height:120px;
 border-radius:10px;
 padding:10px;
-color: black;
 }
 </style>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 
 <script>
 (function(){
-   // Aapki Public Key yahan set kar di gayi hai
-   emailjs.init("7nmy7Endz5mBgcErO"); 
+   emailjs.init("7nmy7Endz5mBgcErO");
 })();
 
 function sendPrompt(){
-   var promptValue = document.getElementById("prompt").value;
-   
-   if(promptValue == ""){ 
-      alert("Please enter a prompt"); 
-      return; 
+   var prompt = document.getElementById("prompt").value;
+   if(prompt==""){
+       alert("Please enter a prompt");
+       return;
    }
 
-   // Aapki Service ID aur Template ID yahan set hain
-   // Note: 'message' wahi variable hai jo aapne EmailJS template mein {{message}} likha hoga
-   var templateParams = {
-      message: promptValue
-   };
-
-   emailjs.send("service_e2ix46l", "template_7rjirg", templateParams)
-   .then(function(response) {
-      alert("Prompt sent successfully! Check your email.");
-      document.getElementById("prompt").value = ""; // Form clear karne ke liye
-   }, function(error) {
-      alert("Error sending prompt: " + JSON.stringify(error));
+   emailjs.send("service_e2ix46l","template_7rjirg",{
+       message: prompt
+   })
+   .then(function(){
+       alert("Prompt sent successfully!");
+       document.getElementById("prompt").value = "";
+   }, function(error){
+       alert("Error sending prompt!");
+       console.log(error);
    });
 }
 </script>
+
 </head>
 <body>
 
@@ -68,7 +63,7 @@ function sendPrompt(){
 <br><br>
 <button onclick="sendPrompt()">Generate Video</button>
 
-<p style="margin-top:40px;">Coming Soon 🚀</p>
+<p style="margin-top:40px;">AI Video Service by Ali Haider 🚀</p>
 
 </body>
 </html>
