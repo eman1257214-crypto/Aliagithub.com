@@ -23,19 +23,39 @@ width:80%;
 height:120px;
 border-radius:10px;
 padding:10px;
+color: black;
 }
 </style>
-<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <script>
 (function(){
-   emailjs.init("YOUR_USER_ID"); // یہ آپ EmailJS سے لیں گے
+   // Aapki Public Key yahan set kar di gayi hai
+   emailjs.init("7nmy7Endz5mBgcErO"); 
 })();
+
 function sendPrompt(){
-   var prompt = document.getElementById("prompt").value;
-   if(prompt==""){ alert("Please enter a prompt"); return; }
-   emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",{message: prompt})
-   .then(function(){ alert("Prompt sent successfully!"); },
-         function(err){ alert("Error sending prompt: "+JSON.stringify(err)); });
+   var promptValue = document.getElementById("prompt").value;
+   
+   if(promptValue == ""){ 
+      alert("Please enter a prompt"); 
+      return; 
+   }
+
+   // Aapki Service ID aur Template ID yahan set hain
+   // Note: 'message' wahi variable hai jo aapne EmailJS template mein {{message}} likha hoga
+   var templateParams = {
+      message: promptValue
+   };
+
+   emailjs.send("service_e2ix46l", "template_7rjirg", templateParams)
+   .then(function(response) {
+      alert("Prompt sent successfully! Check your email.");
+      document.getElementById("prompt").value = ""; // Form clear karne ke liye
+   }, function(error) {
+      alert("Error sending prompt: " + JSON.stringify(error));
+   });
 }
 </script>
 </head>
